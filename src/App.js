@@ -9,7 +9,7 @@ const App = () => {
         </div>
         <div>
           <Formik
-            initialValues={{ name: "", email: "", message: "" }}
+            initialValues={{ name: "", email: "", company: "", message: "" }}
             validate={(values) => {
               const errors = {};
               if (!values.email) {
@@ -19,14 +19,30 @@ const App = () => {
               ) {
                 errors.email = "Invalid email address";
               }
+              if (!values.name) {
+                errors.name = "Required";
+              }
               return errors;
             }}
-            onSubmit={(values, { setSubmitting }) => {
-              setTimeout(() => {
-                alert(JSON.stringify(values, null, 2));
-                console.log(JSON.stringify(values, null, 2));
-                setSubmitting(false);
-              }, 400);
+            onSubmit={async (values, { setSubmitting }) => {
+              let f = await fetch("http://localhost:3000/", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+              });
+              let res = await f.text();
+              console.log(res);
+              // setTimeout(() =>
+              // alert(JSON.stringify(values, null, 2));
+              console.log(JSON.stringify(values, null, 2));
+              values.name = "";
+              values.email = "";
+              values.company = "";
+              values.message = "";
+              setSubmitting(false);
+              // }, 400);
             }}
           >
             {({
@@ -60,7 +76,9 @@ const App = () => {
                       placeholder="Enter your name"
                     />
                   </div>
-                  {errors.name && touched.name && errors.name}
+                  <div className="text-danger fs-5">
+                    {errors.name && touched.name && errors.name}
+                  </div>
                   <div className="w-75">
                     <input
                       type="email"
@@ -77,12 +95,27 @@ const App = () => {
                     {errors.email && touched.email && errors.email}
                   </div>
                   <div className="w-75">
+                    <input
+                      type="text"
+                      name="company"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.company}
+                      className="fs-4"
+                      style={{ width: "100%" }}
+                      placeholder="Enter your company name"
+                    />
+                  </div>
+                  <div className="text-danger fs-5">
+                    {errors.company && touched.company && errors.company}
+                  </div>
+                  <div className="w-75">
                     <textarea
                       type="text"
                       name="message"
                       onChange={handleChange}
                       onBlur={handleBlur}
-                      value={values.password}
+                      value={values.message}
                       style={{ width: "100%", height: "150px" }}
                       placeholder="Write message..."
                     ></textarea>
