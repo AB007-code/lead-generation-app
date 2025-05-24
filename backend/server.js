@@ -11,9 +11,28 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("Hello World!");
+app.post("/", async (req, res) => {
+  let lead = req.body;
+  try {
+    const n8nRes = await fetch(
+      "https://abhilash88.app.n8n.cloud/webhook-test/8e831a3b-2b68-43cb-81bb-e5f8844292fb",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(lead),
+      }
+    );
+    console.log("Sent to n8n:", await n8nRes.text());
+    res
+      .status(200)
+      .json({ success: true, message: "Lead received and sent to n8n." });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ success: false, message: "Error sending data to n8n." });
+  }
 });
 
 app.listen(port, () => {

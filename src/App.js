@@ -34,15 +34,12 @@ const App = () => {
               });
               let res = await f.text();
               console.log(res);
-              // setTimeout(() =>
-              // alert(JSON.stringify(values, null, 2));
               console.log(JSON.stringify(values, null, 2));
               values.name = "";
               values.email = "";
               values.company = "";
               values.message = "";
               setSubmitting(false);
-              // }, 400);
             }}
           >
             {({
