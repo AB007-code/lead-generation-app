@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
+const apiUrl = process.env.REACT_APP_API_BASE_URL;
 const App = () => {
   return (
     <>
@@ -25,7 +26,7 @@ const App = () => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              let f = await fetch("http://localhost:3001/", {
+              let f = await fetch(`${apiUrl}`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
