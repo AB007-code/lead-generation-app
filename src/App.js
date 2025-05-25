@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-const apiUrl = process.env.REACT_APP_API_BASE_URL;
+const apiUrl = process.env.REACT_APP_API_BASE_URL || "http://localhost:3001";
 const App = () => {
   return (
     <>
