@@ -1,0 +1,178 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "8e831a3b-2b68-43cb-81bb-e5f8844292fb",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -200,
+        -60
+      ],
+      "id": "6d45906e-fbb7-4df4-9030-2c10175c59b6",
+      "name": "Webhook",
+      "webhookId": "8e831a3b-2b68-43cb-81bb-e5f8844292fb",
+      "notesInFlow": true,
+      "notes": "Successfull"
+    },
+    {
+      "parameters": {
+        "resource": "mail",
+        "fromEmail": "=abhilash.vc888@gmail.com",
+        "fromName": "=Sales Team",
+        "toEmail": "=abhilash.vc888@gmail.com",
+        "subject": "New Lead Generation Notification",
+        "contentValue": "=Dear Sales Team,\n\nI am pleased to inform you that we have successfully generated a new lead as of {{ $now }}. Please find the details below:\n\nLead Name: {{ $json.Name }}\nContact Details: {{ $json.Email }}\nCompany: {{ $json.Company }}\nMessage: {{ $json.Message }}\n\nKindly review the lead information and take the necessary steps to initiate contact and follow up. Please update the CRM with your progress and reach out if you need any additional information or support.\n\nLet’s work together to convert this opportunity into a successful partnership!\n\nBest regards,\nAbhilash Chaurasiya\nManager\n+919538450441",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.sendGrid",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -60
+      ],
+      "id": "10c0d045-a559-4597-8931-c3863ea1f0fb",
+      "name": "SendGrid",
+      "credentials": {
+        "sendGridApi": {
+          "id": "2djEx4NGZIsOCrrl",
+          "name": "SendGrid account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1CV3FbeTmlcTANYDTOFOcIW9reb4GOynxDrfQtJ2yWJs",
+          "mode": "list",
+          "cachedResultName": "n8n Lead Generate Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CV3FbeTmlcTANYDTOFOcIW9reb4GOynxDrfQtJ2yWJs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1CV3FbeTmlcTANYDTOFOcIW9reb4GOynxDrfQtJ2yWJs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.name }}",
+            "Email": "={{ $json.body.email }}",
+            "Company": "={{ $json.body.company }}",
+            "Message": "={{ $json.body.message }}",
+            "Time": "={{ $now }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company",
+              "displayName": "Company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Message",
+              "displayName": "Message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Time",
+              "displayName": "Time",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        20,
+        -60
+      ],
+      "id": "10f5d087-0fbc-4a39-8976-79239adeec9b",
+      "name": "Google Sheets",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "IbqOofpEL7KrnFFd",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "SendGrid",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "2403df7e-7b60-46de-bcdc-608b73cae80a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e028908fa83ec1f4646a15fd5605ee18dbe6280567269714176139b56b3df2db"
+  },
+  "id": "LXN4ixVWAvUhKWoH",
+  "tags": []
+}

@@ -3,7 +3,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 const app = express();
-const port = 3000;
+const port = 3001;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
@@ -15,7 +15,7 @@ app.post("/", async (req, res) => {
   let lead = req.body;
   try {
     const n8nRes = await fetch(
-      "https://abhilash88.app.n8n.cloud/webhook-test/8e831a3b-2b68-43cb-81bb-e5f8844292fb",
+      "https://abhilash88.app.n8n.cloud/webhook/8e831a3b-2b68-43cb-81bb-e5f8844292fb",
       {
         method: "POST",
         headers: {
