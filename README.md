@@ -1,70 +1,131 @@
-<!-- # Getting Started with Create React App
+# 🧲 Lead Generation App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a full-stack lead generation application consisting of:
 
-## Available Scripts
+- A **React** front-end form for collecting user data.
+- An **Express** backend server that handles POST requests.
+- An **n8n** workflow that:
+  - Stores the submitted data into a Google Sheet.
+  - Sends an email notification via SendGrid.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 📁 Project Structure
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+.
+├── App.js               # Frontend React component
+├── server.js           # Backend Express server
+├── My_workflow.json    # n8n Workflow configuration
+├── README.md           # Project Documentation
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🚀 How It Works
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. **User Submits Form**  
+   The React form collects:
 
-### `npm run build`
+   - Name
+   - Email
+   - Company
+   - Message  
+     and sends a POST request to the backend.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. **Backend Receives Data**  
+   The Express server (on "https://lead-generation-app.onrender.com") receives the POST data and forwards it to the configured n8n webhook.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+3. **n8n Workflow Triggered**
+   - **Webhook Node:** Receives data from Express.
+   - **Google Sheets Node:** Appends the data into a Google Spreadsheet.
+   - **SendGrid Node:** Sends an email notification to the sales team.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 🔧 Installation & Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 1. Clone the Repository
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone <your-repo-url>
+cd your-repo
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 2. Install Backend Dependencies
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+cd backend
+npm install
+node server.js
+```
 
-## Learn More
+### 3. Run the Frontend
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+cd frontend
+npm install
+npm start
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Make sure the backend is running at `https://lead-generation-app.onrender.com/` or update the fetch URL in `App.js`.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🔗 External Services
 
-### Analyzing the Bundle Size
+- **n8n Cloud**: Used for the automation workflow.
+- **SendGrid**: For sending email notifications.
+- **Google Sheets**: For storing submitted leads.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Webhook URL Used:**  
+`https://abhilash88.app.n8n.cloud/webhook/8e831a3b-2b68-43cb-81bb-e5f8844292fb`
 
-### Making a Progressive Web App
+**Google Sheet (example):**  
+[Lead Data Sheet](https://docs.google.com/spreadsheets/d/1CV3FbeTmlcTANYDTOFOcIW9reb4GOynxDrfQtJ2yWJs/edit?usp=drivesdk)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 📬 Email Template
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
+Subject: New Lead Generation Notification
 
-### Deployment
+Dear Sales Team,
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+I am pleased to inform you that we have successfully generated a new lead.
 
-### `npm run build` fails to minify
+Lead Name: {{ $json.Name }}
+Contact Details: {{ $json.Email }}
+Company: {{ $json.Company }}
+Message: {{ $json.Message }}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify) -->
+Best regards,
+Abhilash Chaurasiya
+Manager
++91 9538450441
+```
+
+---
+
+## 🛡️ Validation
+
+The form includes basic validation:
+
+- Name and Email are required.
+- Email format is validated using regex.
+
+---
+
+## ✅ Example Output (Console)
+
+```
+Sent to n8n: Success
+Lead received and sent to n8n.
+```
+
+---
+
+## 📄 License
+
+This project is open-source and free to use under the MIT License.
