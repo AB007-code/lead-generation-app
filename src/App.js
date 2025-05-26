@@ -26,7 +26,7 @@ const App = () => {
               return errors;
             }}
             onSubmit={async (values, { setSubmitting }) => {
-              let f = await fetch("https://lead-generation-app.onrender.com", {
+              let f = await fetch("https://lead-generation-app.onrender.com/", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
