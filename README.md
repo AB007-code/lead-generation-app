@@ -55,16 +55,12 @@ cd your-repo
 ### 2. Install Backend Dependencies
 
 ```bash
-cd backend
-npm install
 node server.js
 ```
 
 ### 3. Run the Frontend
 
 ```bash
-cd frontend
-npm install
 npm start
 ```
 
@@ -125,7 +121,3 @@ Lead received and sent to n8n.
 ```
 
 ---
-
-## 📄 License
-
-This project is open-source and free to use under the MIT License.
