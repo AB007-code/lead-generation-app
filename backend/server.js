@@ -15,7 +15,7 @@ app.post("/", async (req, res) => {
   let lead = req.body;
   try {
     const n8nRes = await fetch(
-      "http://localhost:5678/webhook-test/8e831a3b-2b68-43cb-81bb-e5f8844292fb",
+      "http://localhost:5678/webhook/8e831a3b-2b68-43cb-81bb-e5f8844292fb",
       {
         method: "POST",
         headers: {
